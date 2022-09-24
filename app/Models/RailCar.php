@@ -9,6 +9,7 @@ class RailCar extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
     //STATUS CONSTANTS
      const STATUS_PARKED = 'PARKED';
      const STATUS_LOADING = 'LOADING';
@@ -23,5 +24,9 @@ class RailCar extends Model
     const AREA_PLATFORM_1 = 'PLATFORM_1';
     const AREA_PLATFORM_2 = 'PLATFORM_2';
     const AREA_PLATFORM_3 = 'PLATFORM_3';
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
 }

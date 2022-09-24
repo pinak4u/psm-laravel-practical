@@ -32,6 +32,7 @@ class RailCarFactory extends Factory
         ];
         return [
             'name' => $this->faker->name(),
+            'user_id' => random_int(2,10),
             'area' => $this->faker->randomElement($areaArray),
             'status' => $this->faker->randomElement($statusArray),
             'due_date' => Carbon::now()->addDays(rand(1,4)),

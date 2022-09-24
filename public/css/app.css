@@ -10856,3 +10856,7 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.error-text{
+    color:red;
+}
+
