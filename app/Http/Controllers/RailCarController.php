@@ -9,13 +9,23 @@ use App\Models\User;
 
 class RailCarController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['can:create_railcar'])->only('create','store');
+        $this->middleware(['can:edit_railcar'])->only('edit','update');
+        $this->middleware(['isResourceOwner'])->only('show','edit','update');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-        $railCars = RailCar::with(['user'])->paginate(10);
+        $authUser = auth()->user();
+        $railCars = $authUser->hasRole('admin')
+            ? RailCar::onlyTrashed()
+            : $authUser->railCars();
+        $railCars = $railCars->with(['user'])->paginate(10);
         return view('railcar.index',compact('railCars'));
     }
 
@@ -24,7 +34,6 @@ class RailCarController extends Controller
      */
     public function create()
     {
-        //
         $users = User::all();
         return view('railcar.create',compact('users'));
     }
@@ -34,7 +43,6 @@ class RailCarController extends Controller
      */
     public function store(RailCarCreateRequest $request)
     {
-        //
         $request->merge(['user_id'=>$request->user()->id]);
         RailCar::create($request->only(['user_id','name','status','area','arrival_date','due_date']));
         $railCars = RailCar::paginate(10);
@@ -46,8 +54,9 @@ class RailCarController extends Controller
      */
     public function show($id)
     {
-        //
-        $railCar = RailCar::findOrFail($id);
+        auth()->user()->hasRole('admin')
+             ? $railCar = RailCar::withTrashed()->find($id)
+             : $railCar = RailCar::findOrFail($id);
         return view('railcar.show',compact('railCar'));
     }
 
@@ -56,7 +65,6 @@ class RailCarController extends Controller
      */
     public function edit($id)
     {
-        //
         $railCar = RailCar::findOrFail($id);
         return view('railcar.update',compact('railCar'));
     }
@@ -80,8 +88,9 @@ class RailCarController extends Controller
      */
     public function destroy($id)
     {
-        //
-        RailCar::destroy($id);
+        auth()->user()->hasRole('admin')
+            ? RailCar::withTrashed()->find($id)->forceDelete()
+            : RailCar::destroy($id);
         $railCars = RailCar::paginate(10);
         return redirect()->route('railcars.index',compact($railCars));
     }

@@ -26,20 +26,19 @@ class DatabaseSeeder extends Seeder
          Artisan::call('permission:create-permission view_railcar');
          Artisan::call('permission:create-permission edit_railcar');
          Artisan::call('permission:create-permission delete_railcar');
-         Artisan::call('permission:create-permission admin_delete_railcar');
 
          //Generating Roles and assigning permissions
-         Artisan::call('permission:create-role normal_user web "create_railcar|view_railcar|edit_railcar|delete_railcar"');
-         Artisan::call('permission:create-role admin_user web "view_railcar|admin_delete_railcar"');
+         Artisan::call('permission:create-role normal web "create_railcar|view_railcar|edit_railcar|delete_railcar"');
+         Artisan::call('permission:create-role admin web "view_railcar|delete_railcar"');
 
          //Assigning Admin Role to the first user
-         User::first()->assignRole('admin_user');
+         User::first()->assignRole('admin');
 
          //Assigning Normal Role to the all other users.
          User::where('id','<>',1)
              ->get()
              ->each(function($user){
-                   return $user->assignRole('normal_user');
+                   return $user->assignRole('normal');
              });
     }
 }

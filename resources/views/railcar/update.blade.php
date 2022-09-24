@@ -10,8 +10,7 @@
                 <div class="card-body">
                     <form action="{{route('railcars.update',$railCar->id)}}" method="post">
                         @csrf
-                        @method('PUT')
-                        <input type="hidden" name="user_id" value="{{$railCar->user_id}}">
+                        @method('PATCH')
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="name">Name</label>
