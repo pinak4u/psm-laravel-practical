@@ -46,7 +46,7 @@
                         <div class="row mt-3">
                             <div class="form-group col-md-6">
                                 <label for="arrival_date">Arrival Date</label>
-                                <input id="arrival_date" placeholder="Select Your Arrival Date Please" type="text" value="{{ old('arrival_date') }}" class="form-control" name="arrival_date">
+                                <input id="arrival_date" autocomplete="off" placeholder="Select Your Arrival Date Please" type="text" value="{{ old('arrival_date') }}" class="form-control" name="arrival_date">
                                 @error('arrival_date')
                                     <span class="mt-2 error-text"  > {{$message}} </span>
                                 @enderror
@@ -54,7 +54,7 @@
 
                             <div class="form-group col-md-6">
                                 <label for="due_date" >Due Date</label>
-                                <input id="due_date" placeholder="Select Your Due Date Please" type="text" value="{{old('due_date')}}" class="form-control" name="due_date">
+                                <input id="due_date" autocomplete="off" placeholder="Select Your Due Date Please" type="text" value="{{old('due_date')}}" class="form-control" name="due_date">
                                 @error('due_date')
                                     <span class="mt-2 error-text" > {{$message}} </span>
                                 @enderror
