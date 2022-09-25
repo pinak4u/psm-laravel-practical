@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 
 class RailCar extends Model
 {
@@ -28,6 +30,34 @@ class RailCar extends Model
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function getArrivalDateAttribute($value)
+    {
+        $estDate = Carbon::parse($value);
+         return Carbon::create(
+             $estDate->year,$estDate->month, $estDate->day,
+             $estDate->hour, $estDate->minute, $estDate->second, 'EST'
+         )->timezone('Asia/Kolkata');
+    }
+
+    public function setArrivalDateAttribute($value)
+    {
+        $this->attributes['arrival_date'] = Carbon::parse($value)->timezone('EST');
+    }
+
+    public function getDueDateAttribute($value)
+    {
+        $estDate = Carbon::parse($value);
+        return Carbon::create(
+            $estDate->year,$estDate->month, $estDate->day,
+            $estDate->hour, $estDate->minute, $estDate->second, 'EST'
+        )->timezone('Asia/Kolkata');
+    }
+
+    public function setDueDateAttribute($value)
+    {
+        $this->attributes['due_date'] = Carbon::parse($value)->timezone('EST');
     }
 
 }

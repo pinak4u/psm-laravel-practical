@@ -8,7 +8,7 @@
                 <div class="card-header">Rail Car Listing
                     @hasrole('normal')
                         <span class="float-end">
-                            <a href="{{route('railcars.create')}}" class="btn btn-sm btn-primary ">Add Rail Car</a>
+                            <a href="{{route('railcars.create')}}" class="btn btn-sm btn-primary "><i class="fa fa-plus me-1"></i>Add Rail Car </a>
                         </span>
                     @endrole
                 </div>

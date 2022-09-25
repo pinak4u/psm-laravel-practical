@@ -17,8 +17,8 @@ class CreateRailCarsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('area');
-            $table->dateTime('arrival_date');
-            $table->dateTime('due_date');
+            $table->timestamp('arrival_date')->nullable();
+            $table->timestamp('due_date')->nullable();
             $table->string('status');
             $table->timestamps();
             $table->softDeletes();

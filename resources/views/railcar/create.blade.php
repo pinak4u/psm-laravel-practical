@@ -69,10 +69,16 @@
         </div>
     </div>
 </div>
+<script src="{{asset('js/moment.min.js')}}"></script>
+<script src="{{asset('js/moment-timezone.min.js')}}"></script>
 <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
 <script type="text/javascript">
     $(function() {
-        $('#arrival_date, #due_date').datetimepicker({});
+        let todayDate = moment().format('YYYY-MM-DD h:m:00');
+        $('#arrival_date, #due_date').datetimepicker({
+            format: 'yyyy-mm-dd h:ii:00',
+            startDate: todayDate,
+        });
     });
 </script>
 @endsection
